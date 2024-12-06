@@ -40,7 +40,7 @@ def part1(left_side, right_side):
     # utils.print_output(final_df, 'Convert to positive output')
 
     # calculate the sum
-    utils.print_output(final_df.sum(), "What is the total distance between your lists")
+    utils.print_output(final_df.sum(), "What is the total distance between your lists?")
 
 
 # Part 2
