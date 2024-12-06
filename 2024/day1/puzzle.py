@@ -5,6 +5,8 @@ import pandas as pd
 sys.path.append("../helper")
 import utils
 
+utils.challenge_day("1")
+
 # read csv file
 # df = pd.read_csv('input_sample.csv')
 df = pd.read_csv("input.csv")
