@@ -1,22 +1,19 @@
+import sys
+
 import pandas as pd
+
+sys.path.append("../helper")
+import utils
 
 # read csv file
 # df = pd.read_csv('input_sample.csv')
 df = pd.read_csv("input.csv")
 
-# print_output(df, 'All records')
+# utils.print_output(df, 'All records')
 
 # split into 2 dataframes
 left_side = df.iloc[:, [0]]
 right_side = df.iloc[:, [1]]
-
-
-# helper function
-def print_output(data, text):
-    print("\n================================================\n")
-    print(text)
-    print("\n================================================\n")
-    print(data)
 
 
 # Part 1
@@ -30,18 +27,18 @@ def part1(left_side, right_side):
         by=right_side.columns[0], ascending=False
     ).reset_index(drop=True)
 
-    # print_output(sorted_left_side, 'Sorted left side')
-    # print_output(sorted_right_side, 'Sorted right side')
+    # utils.print_output(sorted_left_side, 'Sorted left side')
+    # utils.print_output(sorted_right_side, 'Sorted right side')
 
     # create new dataframe left side - right side
     final_df = sorted_left_side["left_side"] - sorted_right_side["right_side"]
 
     # convert all to positive
     final_df = final_df.abs()
-    # print_output(final_df, 'Convert to positive output')
+    # utils.print_output(final_df, 'Convert to positive output')
 
     # calculate the sum
-    print_output(final_df.sum(), "What is the total distance between your lists")
+    utils.print_output(final_df.sum(), "What is the total distance between your lists")
 
 
 # Part 2
@@ -55,13 +52,12 @@ def part2(left_side, right_side):
     # multiply left_side * count
     left_side["multiply"] = left_side["left_side"] * left_side["count"]
 
-    # print_output(left_side, 'Left side')
+    # utils.print_output(left_side, 'Left side')
 
     # calculate the sum
-    print_output(left_side["multiply"].sum(), "What is their similarity score?")
+    utils.print_output(left_side["multiply"].sum(), "What is their similarity score?")
 
 
 # run functions
 part1(left_side, right_side)
 part2(left_side, right_side)
-
