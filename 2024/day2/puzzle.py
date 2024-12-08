@@ -65,15 +65,37 @@ def checkIfDecrementing(row):
 
 # part 1
 def checkForSafePart1(row):
-    safe = 0
-    if checkIfIncrementing(row):
-        safe = 1
-    elif checkIfDecrementing(row):
-        safe = 1
-
-    return safe
+    if checkIfIncrementing(row) or checkIfDecrementing(row):
+        return 1
+    return 0
 
 
 df["safe"] = df.apply(checkForSafePart1, axis=1)
 
-utils.print_output(df["safe"].sum(), "How many reports are safe?")
+part1Total = df["safe"].sum()
+utils.print_output(part1Total, "How many reports are safe?")
+
+# part 2
+# get only unsafe records
+unsafe_data = df.loc[df["safe"] == 0].copy()
+unsafe_data = unsafe_data.drop(columns=["safe"])
+
+debug("unsafe data", unsafe_data)
+
+
+def checkForSafePart2(row):
+    for i in range(len(row)):
+        altered_row = row.copy()
+        altered_row.drop(index=i, inplace=True)
+        altered_row.reset_index(drop=True, inplace=True)
+        debug("altered row \n", altered_row)
+        if checkForSafePart1(altered_row):
+            return 1
+
+    return 0
+
+
+unsafe_data["safe"] = unsafe_data.apply(checkForSafePart2, axis=1)
+part2Total = unsafe_data["safe"].sum()
+debug("filetered data", unsafe_data)
+utils.print_output(part1Total + part2Total, "How many reports are now safe?")
