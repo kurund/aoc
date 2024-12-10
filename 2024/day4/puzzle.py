@@ -6,8 +6,8 @@ import utils
 
 utils.challenge_day("4")
 
-sample = True
-# sample = False
+# sample = True
+sample = False
 input_file = "input_sample.txt" if sample else "input.txt"
 
 # part 1
@@ -29,28 +29,39 @@ def checkforXmas(matrix, row_index, column_index, direction):
             if direction == "forward":
                 index_value = matrix[row_index][column_index + i]
             elif direction == "backward":
+                if column_index - i < 0:
+                    return False
                 index_value = matrix[row_index][column_index - i]
             elif direction == "top":
+                if row_index - i < 0:
+                    return False
                 index_value = matrix[row_index - i][column_index]
             elif direction == "bottom":
                 index_value = matrix[row_index + i][column_index]
             elif direction == "top-left":
+                if column_index - i < 0 or row_index - i < 0:
+                    return False
                 index_value = matrix[row_index - i][column_index - i]
             elif direction == "top-right":
+                if row_index - i < 0:
+                    return False
                 index_value = matrix[row_index - i][column_index + i]
             elif direction == "bottom-left":
+                if column_index - i < 0:
+                    return False
                 index_value = matrix[row_index + i][column_index - i]
             elif direction == "bottom-right":
                 index_value = matrix[row_index + i][column_index + i]
 
+            # print(index_value)
             xmas_string = xmas_string + index_value
         except IndexError:
             return False
 
-    print(xmas_string)
+    # print(xmas_string)
     if xmas_string == "XMAS":
-        print("Found on row number:", row_index)
-        print("Found on col number:", column_index)
+        # print("Found on row number:", row_index)
+        # print("Found on col number:", column_index)
         return True
 
 
@@ -58,28 +69,28 @@ xmas_count = 0
 for row_index, row in enumerate(matrix):
     for column_index, col in enumerate(row):
         if col == "X":
-            # if checkforXmas(matrix, row_index, column_index, "forward"):
-            #     xmas_count += 1
-            #
-            # if checkforXmas(matrix, row_index, column_index, "backward"):
-            #     xmas_count += 1
-            #
-            # if checkforXmas(matrix, row_index, column_index, "top"):
-            #     xmas_count += 1
-            #
-            # if checkforXmas(matrix, row_index, column_index, "bottom"):
-            #     xmas_count += 1
+            if checkforXmas(matrix, row_index, column_index, "forward"):
+                xmas_count += 1
+
+            if checkforXmas(matrix, row_index, column_index, "backward"):
+                xmas_count += 1
+
+            if checkforXmas(matrix, row_index, column_index, "top"):
+                xmas_count += 1
+
+            if checkforXmas(matrix, row_index, column_index, "bottom"):
+                xmas_count += 1
 
             if checkforXmas(matrix, row_index, column_index, "top-left"):
                 xmas_count += 1
 
-            # if checkforXmas(matrix, row_index, column_index, "top-right"):
-            #     xmas_count += 1
-            #
-            # if checkforXmas(matrix, row_index, column_index, "bottom-left"):
-            #     xmas_count += 1
-            #
-            # if checkforXmas(matrix, row_index, column_index, "bottom-right"):
-            #     xmas_count += 1
+            if checkforXmas(matrix, row_index, column_index, "top-right"):
+                xmas_count += 1
+
+            if checkforXmas(matrix, row_index, column_index, "bottom-left"):
+                xmas_count += 1
+
+            if checkforXmas(matrix, row_index, column_index, "bottom-right"):
+                xmas_count += 1
 
 utils.print_output(xmas_count, "How many times does XMAS appear?")
