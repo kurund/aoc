@@ -28,19 +28,29 @@ def checkforXmas(matrix, row_index, column_index, direction):
         try:
             if direction == "forward":
                 index_value = matrix[row_index][column_index + i]
-            elif direction == "backword":
+            elif direction == "backward":
                 index_value = matrix[row_index][column_index - i]
             elif direction == "top":
                 index_value = matrix[row_index - i][column_index]
-            elif direction == "down":
+            elif direction == "bottom":
                 index_value = matrix[row_index + i][column_index]
+            elif direction == "top-left":
+                index_value = matrix[row_index - i][column_index - i]
+            elif direction == "top-right":
+                index_value = matrix[row_index - i][column_index + i]
+            elif direction == "bottom-left":
+                index_value = matrix[row_index + i][column_index - i]
+            elif direction == "bottom-right":
+                index_value = matrix[row_index + i][column_index + i]
 
             xmas_string = xmas_string + index_value
         except IndexError:
             return False
 
+    print(xmas_string)
     if xmas_string == "XMAS":
-        # print("Found on row number:", row_index)
+        print("Found on row number:", row_index)
+        print("Found on col number:", column_index)
         return True
 
 
@@ -48,16 +58,28 @@ xmas_count = 0
 for row_index, row in enumerate(matrix):
     for column_index, col in enumerate(row):
         if col == "X":
-            if checkforXmas(matrix, row_index, column_index, "forward"):
+            # if checkforXmas(matrix, row_index, column_index, "forward"):
+            #     xmas_count += 1
+            #
+            # if checkforXmas(matrix, row_index, column_index, "backward"):
+            #     xmas_count += 1
+            #
+            # if checkforXmas(matrix, row_index, column_index, "top"):
+            #     xmas_count += 1
+            #
+            # if checkforXmas(matrix, row_index, column_index, "bottom"):
+            #     xmas_count += 1
+
+            if checkforXmas(matrix, row_index, column_index, "top-left"):
                 xmas_count += 1
 
-            if checkforXmas(matrix, row_index, column_index, "backword"):
-                xmas_count += 1
-
-            if checkforXmas(matrix, row_index, column_index, "top"):
-                xmas_count += 1
-
-            if checkforXmas(matrix, row_index, column_index, "down"):
-                xmas_count += 1
+            # if checkforXmas(matrix, row_index, column_index, "top-right"):
+            #     xmas_count += 1
+            #
+            # if checkforXmas(matrix, row_index, column_index, "bottom-left"):
+            #     xmas_count += 1
+            #
+            # if checkforXmas(matrix, row_index, column_index, "bottom-right"):
+            #     xmas_count += 1
 
 utils.print_output(xmas_count, "How many times does XMAS appear?")
