@@ -6,8 +6,8 @@ import utils
 
 utils.challenge_day("4")
 
-# sample = True
-sample = False
+sample = True
+# sample = False
 input_file = "input_sample.txt" if sample else "input.txt"
 
 # part 1
@@ -92,5 +92,39 @@ for row_index, row in enumerate(matrix):
 
             if checkforXmas(matrix, row_index, column_index, "bottom-right"):
                 xmas_count += 1
+
+utils.print_output(xmas_count, "How many times does XMAS appear?")
+
+# part 2
+
+
+def checkForMas(matrix, row_index, column_index):
+    try:
+        if row_index - 1 < 0 or column_index - 1 < 0:
+            return False
+        top_left = matrix[row_index - 1][column_index - 1]
+        if (
+            top_left == "M"
+            and matrix[row_index - 1][column_index + 1] == "S"
+            and matrix[row_index + 1][column_index - 1] == "M"
+            and matrix[row_index + 1][column_index + 1] == "S"
+        ):
+            return True
+    except IndexError:
+        return False
+
+    return False
+
+
+xmas_count = 0
+for row_index, row in enumerate(matrix):
+    for column_index, col in enumerate(row):
+        if col == "A":
+            if checkForMas(matrix, row_index, column_index):
+                xmas_count += 1
+
+            # except IndexError:
+            #     return False
+            #
 
 utils.print_output(xmas_count, "How many times does XMAS appear?")
