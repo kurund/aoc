@@ -74,22 +74,33 @@ def part2(data, starting_position):
         direction = instruction[0]  # 'L' or 'R'
         value = int(instruction[1:])  # The number after L or R
 
+        print(f"{instruction} - Current Position: {current_position}")
+
+        prev_reset_count = reset_count
+
         # check if we will pass 99 or went to negative (reset happens)
         # before calculating new position
+        # we need to consider R1000 scenario when reset might happen multiple times
         if direction == "L":
-            if current_position - value < 0:
-                reset_count += 1
+            # count how many times we went from 0 to 99
+            # skip if we are already at 0 to avoid double counting
+            if current_position > 0 and value > current_position:
+                reset_count += (value - current_position + 99) // 100
             current_position = (current_position - value) % 100
         elif direction == "R":
-            if current_position + value >= 100:
-                reset_count += 1
+            # count how many times we went from 99 to 0
+            # skip if we are already at 0 to avoid double counting
+            if current_position > 0:
+                reset_count += (current_position + value) // 100
             current_position = (current_position + value) % 100
 
         # count how many times we got 0
         if current_position == 0:
             zero_count += 1
 
-        print(f"Row {index}: {instruction} - Position: {current_position}")
+        print(f"{instruction} - New Position: {current_position}")
+        print(f"Incremented by: {abs(prev_reset_count- reset_count)}")
+        print(f"Reset count: {reset_count}\n")
 
     print(f"Part 1: Count instances when we got 0: {zero_count} times")
     print(f"Part 2: Count instances when reset happened: {reset_count} times")
